@@ -8,12 +8,10 @@ def authenticate():
 # Take in reddit thread & phrase, collect num of comments containing phrase
 # and time posted. use matplotlib to generate chart
 
-def collect_comment_info(thread_id, phrase):
+def collect_comment_info(reddit, thread_id, phrase):
     """Goes throgh the thread_id, searching every comment for the given phrase,
-    returns a list containing information about comments that had the phrase.
-    """
+    returns a list containing information about comments that had the phrase."""
     try:
-        reddit = authenticate()
         submission = reddit.submission(id=thread_id)
         phrase_count = 0 # The total number of occurences of phrase
         comment_info = []
@@ -33,10 +31,10 @@ def collect_comment_info(thread_id, phrase):
         print("Custom error:", type(e), e)
         return None
 
-def main():
+def main(reddit):
     """Runs the program."""
     thread, phrase = get_args()
-    comment_info = collect_comment_info(thread, phrase)
+    comment_info = collect_comment_info(reddit, thread, phrase)
 
     if comment_info is not None:
         # process, create chart
@@ -60,4 +58,5 @@ def get_args():
     return thread, phrase
 
 if __name__ == "__main__":
-    main()
+    reddit = authenticate()
+    main(reddit)
