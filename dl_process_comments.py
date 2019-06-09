@@ -1,4 +1,4 @@
-import requests, json, time, argparse
+import requests, json, time, argparse, csv
 from datetime import datetime
 
 def download(thread_id, phrase, hours):
@@ -14,13 +14,16 @@ def download(thread_id, phrase, hours):
         'size': 0
     }
 
-    data = json.loads(requests.get(BASE_URL, params=PARAMS).text)['aggs']['created_utc']
-
+    data = json.loads(requests.get(BASE_URL, params=PARAMS).text)['aggs']
     return data, THREAD_CREATED, NEWEST_DATA_UTC
 
 def process(data, thread_created_utc, newest_data_utc):
-    #csv
-    pass
+    with open('comments.csv', 'w', newline='') as score_file:
+        writer = csv.writer(score_file)
+        writer.writerow(["Time", "id"]) # Write column names
+        for point in data['created_utc']:
+            writer.writerow([point['key'], point['doc_count']])
+    return
 
 def get_creation_utc(thread_id):
     """Gets the UTC timestamp of when the thread was created"""
@@ -49,7 +52,7 @@ def get_args():
 
 def main():
     thread, phrase, hours = get_args()
-    data, thread_created, newest_data_utc = download(thread, phrase, hours=24)
+    data, thread_created, newest_data_utc = download(thread, phrase, int(hours))
     process(data, thread_created, newest_data_utc)
 
 if __name__ == "__main__":
