@@ -21,7 +21,7 @@ def collect_comment_info(reddit, thread_url, phrase):
             for comment in submission.comments.list():
                 if r.search(comment.body):
                     writer.writerow([time.time(), comment.id])
-            return
+        return
     except prawcore.exceptions.NotFound:
         print("Invalid thread URL!")
         return None
