@@ -20,7 +20,7 @@ def download(thread_id, phrase, hours):
 def process(data, thread_created_utc, newest_data_utc):
     with open('comments.csv', 'w', newline='') as score_file:
         writer = csv.writer(score_file)
-        writer.writerow(["Time", "id"]) # Write column names
+        writer.writerow(["Time", "ID"]) # Write column names
         for point in data['created_utc']:
             writer.writerow([point['key'], point['doc_count']])
     return
