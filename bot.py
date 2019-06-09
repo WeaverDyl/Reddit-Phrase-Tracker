@@ -8,7 +8,8 @@ def authenticate():
 
 def collect_comment_info(reddit, thread_url, phrase):
     """Goes throgh the reddit post, searching every comment for the given phrase,
-    returns a list containing information about comments that had the phrase"""
+    returns a csv containing a timestamp and id of every comment containing the
+    phrase"""
     try:
         submission = reddit.submission(url=thread_url)
         with open('comments.csv', 'w', newline='') as score_file:
@@ -16,11 +17,11 @@ def collect_comment_info(reddit, thread_url, phrase):
             writer.writerow(["Time", "id"]) # Write column names
 
             submission.comments.replace_more(limit=None, threshold=0)
+            r = re.compile(r'\b' + phrase + r'\b')
             for comment in submission.comments.list():
-                r = re.compile(r'\b' + phrase + r'\b')
                 if r.search(comment.body):
                     writer.writerow([time.time(), comment.id])
-        return
+            return
     except prawcore.exceptions.NotFound:
         print("Invalid thread URL!")
         return None
@@ -37,7 +38,7 @@ def main():
     print(f"Collected all comments up to {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 def get_args():
-    """Setups up the argument parser, returning the Reddit thread URL and
+    """Sets up the argument parser, returning the Reddit thread URL and
     the phrase to collect data for"""
     parser = argparse.ArgumentParser()
     parser.add_argument("thread", help="Stores the Reddit thread URL")
