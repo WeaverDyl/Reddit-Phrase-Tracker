@@ -12,11 +12,11 @@ Reddit post:
 
 My program (Running `python dl_process_comments.py 8y1m08 fuck 4`):  
 
-![](https://imgur.com/g1zdRzo.png)
+![](https://imgur.com/inEEHra.png)
 
 Another example from the 2019 Canadian Grand Prix:
 
-![](https://imgur.com/hqx4plB.png)
+![](https://imgur.com/40iREST.png)
 
 As you can see, Vettel and Hamilton make up a large majority of the comments by the end due to a controversial FIA call that caused Hamilton to win the race despite Vettel finishing first.
 
