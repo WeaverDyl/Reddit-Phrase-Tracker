@@ -24,7 +24,7 @@ As you can see, Vettel and Hamilton make up a large majority of the comments by 
 
 You must have [PRAW](https://praw.readthedocs.io/en/latest/) installed to run this program. Install it using `pip install praw`.
 
-You must also have [R](https://www.r-project.org/) installed along with the [Tidyverse](https://www.tidyverse.org), [anytime](https://github.com/eddelbuettel/anytime), and [scales]() libraries installed.
+You must also have [R](https://www.r-project.org/) installed along with the [Tidyverse](https://www.tidyverse.org), [anytime](https://github.com/eddelbuettel/anytime), and [scales](https://cran.r-project.org/web/packages/scales/index.html) libraries installed.
 
 Create a `praw.ini` file with the following format:
 
