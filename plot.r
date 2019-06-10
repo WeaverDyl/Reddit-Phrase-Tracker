@@ -1,18 +1,31 @@
 library(tidyverse)
 library(anytime)
-library(ggplot2)
+library(scales)
 
-# Load data
-data <- read_csv("comments.csv")
+# Load!
+data_match <- read_csv("matched_comments.csv")
+data_all <- read_csv("all_comments.csv")
 
 # Create new date column from epoch
-data <- data %>%
+data_match <- data_match %>%
+  mutate(datetime=as.POSIXct(Time, origin="1970-01-01"))
+
+data_all <- data_all %>%
   mutate(datetime=as.POSIXct(Time, origin="1970-01-01"))
 
 # Plot!
-data %>%
-  ggplot(aes(x=datetime, y=id)) +
-  geom_line() +
+ggplot() +
+  geom_area(data=data_all, aes(x=datetime, y=ID, fill="All Comments"), color="dodgerblue4") +
+  geom_area(data=data_match, aes(x=datetime, y=ID, fill="Comments Matching Phrase"), color="red") +   
+  scale_fill_manual(values=c("All Comments"="dodgerblue", "Comments Matching Phrase"="pink2")) +
   scale_x_datetime(expand=c(0,0), date_label="%H:%M", breaks=date_breaks("4 min")) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
-  labs(x="Time", y="Uses Per Minute", title="Uses of the Word ___ in Reddit Thread: ____")
+  scale_y_sqrt(expand=c(0,0), breaks=trans_breaks(identity, identity, n = 10)) +
+  theme(axis.text.x=element_text(angle = 90, vjust = 0.5), legend.position="bottom") +
+  labs(x="Time", y="Uses Per Minute", title="Uses of the Word ____ Reddit Thread ____")
+
+# Save!
+ggsave(filename="finalPlot.png", plot = last_plot(),
+       width = 10, height = 5, 
+       units = "in",
+       dpi = 300
+)
