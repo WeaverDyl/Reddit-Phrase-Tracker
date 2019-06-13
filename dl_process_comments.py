@@ -41,9 +41,9 @@ def get_args():
     """Sets up the argument parser, returning the Reddit thread URL and
     the phrase to collect data for"""
     parser = argparse.ArgumentParser()
-    parser.add_argument("thread", help="Stores the Reddit thread URL")
-    parser.add_argument("phrase", help="Stores the phrase to search for")
-    parser.add_argument("hours", help="Stores the number of hours to aggregate from the post creation time")
+    parser.add_argument("-t", "--thread", help="Stores the Reddit thread URL", required=True)
+    parser.add_argument("-p", "--phrase", help="Stores the phrase to search for", required=True)
+    parser.add_argument("-n", "--hours", help="Stores the number of hours to aggregate from the post creation time", required=True)
 
     args = parser.parse_args()
     thread = args.thread
