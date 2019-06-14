@@ -26,7 +26,7 @@ data_combined %>%
   scale_x_datetime(expand=c(0,0), date_label="%H:%M", breaks=date_breaks("4 min")) +
   scale_y_sqrt(expand=c(0,0), breaks=trans_breaks(identity, identity, n = 10)) +
   theme(axis.text.x=element_text(angle = 90, vjust = 0.5), legend.position="bottom") +
-  labs(x="Time", y="Uses Per Minute", title="Uses of the Word ____ Reddit Thread ____")
+  labs(x="Time (UTC)", y="Comments Per Minute", title="Uses of the Word ____ Reddit Thread ____")
 
 # Save!
 ggsave(filename="finalPlot.png", plot = last_plot(),
@@ -34,4 +34,3 @@ ggsave(filename="finalPlot.png", plot = last_plot(),
        units = "in",
        dpi = 300
 )
-
