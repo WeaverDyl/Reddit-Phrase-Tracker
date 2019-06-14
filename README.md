@@ -10,7 +10,7 @@ Reddit post:
 
 ![](https://i.redd.it/jjy7s72ixj911.png)
 
-My program (Running `python dl_process_comments.py 8y1m08 fuck 4`):  
+My program (Running `python dl_process_comments.py -t 8y1m08 -p fuck -n 4`):  
 
 ![](https://imgur.com/inEEHra.png)
 
@@ -36,7 +36,7 @@ Create a `praw.ini` file with the following format:
 
 ## Running the Program
 
-Simply run `python dl_process_comments.py THREAD_ID PHRASE NUM_HOURS_TO_COLLECT`. The program will output a `matched_comments.csv` and `all_comments.csv` file, each containing two columns:
+Simply run `python dl_process_comments.py -t THREAD_ID -p PHRASE -n NUM_HOURS_TO_COLLECT`. The program will output a `matched_comments.csv` and `all_comments.csv` file, each containing two columns:
 
 1. The Unix timestamp of each comment containing the phrase
 2. The corresponding Reddit comment ID
