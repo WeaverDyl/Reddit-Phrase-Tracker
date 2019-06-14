@@ -2,7 +2,7 @@ import requests, json, time, argparse, csv
 from datetime import datetime
 
 def download(thread_id, phrase, hours):
-    """Retrieves the data from Pushshift as JSON"""
+    '''Retrieves the data from Pushshift as JSON'''
     try:
         THREAD_CREATED = get_creation_utc(thread_id) # The time the thread was created    
         NEWEST_DATA_UTC = THREAD_CREATED + (60 * 60 * hours) # How much time to collect data for
@@ -22,16 +22,16 @@ def download(thread_id, phrase, hours):
         raise
 
 def process(data, thread_created_utc, newest_data_utc, file_name):
-    """Writes the JSON data to a CSV file (comments.csv)"""
+    '''Writes the JSON data to a CSV file (comments.csv)'''
     with open(file_name, 'w', newline='') as score_file:
         writer = csv.writer(score_file)
-        writer.writerow(["Time", "ID"]) # Write column names
+        writer.writerow(['Time', 'ID']) # Write column names
         for point in data['created_utc']:
             writer.writerow([point['key'], point['doc_count']])
     return
 
 def get_creation_utc(thread_id):
-    """Gets the UTC timestamp of when the thread was created"""
+    '''Gets the UTC timestamp of when the thread was created'''
     BASE_URL = 'https://api.pushshift.io/reddit/submission/search/'
     PARAMS = {
         'ids': thread_id
@@ -41,15 +41,15 @@ def get_creation_utc(thread_id):
         thread_data = json.loads(requests.get(BASE_URL, params=PARAMS).text)['data']
         return thread_data[0]['created_utc']
     except IndexError as e:
-        raise ValueError("Invalid thread ID received.")
+        raise ValueError('Invalid thread ID received.')
 
 def get_args():
-    """Sets up the argument parser, returning the Reddit thread URL and
-    the phrase to collect data for"""
+    '''Sets up the argument parser, returning the Reddit thread URL and
+    the phrase to collect data for'''
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--thread", help='Stores the Reddit thread URL', required=True)
-    parser.add_argument("-p", "--phrase", help='Stores the phrase to search for', required=True)
-    parser.add_argument("-n", "--hours", type=int, help='Stores the number of hours to aggregate from the post creation time', required=True)
+    parser.add_argument('-t', '--thread', help='Stores the Reddit thread URL', required=True)
+    parser.add_argument('-p', '--phrase', help='Stores the phrase to search for', required=True)
+    parser.add_argument('-n', '--hours', type=int, help='Stores the number of hours to aggregate from the post creation time', required=True)
 
     args = parser.parse_args()
     thread = args.thread
@@ -67,15 +67,19 @@ def main():
         process(data, thread_created, newest_data_utc, 'matched_comments.csv')
 
         # Handle ALL comments
-        data, thread_created, newest_data_utc = download(thread, "", hours)
+        data, thread_created, newest_data_utc = download(thread, '', hours)
         process(data, thread_created, newest_data_utc, 'all_comments.csv')
     except ValueError:
         raise
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         main()
-        print("Finished!")
+        print('Finished! Results saved in "matched_comments.csv" and "all_comments.csv"')
+    except json.decoder.JSONDecodeError:
+        # Happens when passing URL in as threadID
+        print('Make sure you are passing a valid Reddit thread ID (not URL)')
     except ValueError as e:
-        print("Error:", e)
+        # Thread ID invalid
+        print('Invalid Reddit thread ID.')
