@@ -16,9 +16,9 @@ My program (Running `python dl_process_comments.py -t 8y1m08 -p fuck -n 4`):
 
 Another example from the 2019 Canadian Grand Prix:
 
-![](https://imgur.com/40iREST.png)
+![](https://imgur.com/Oz0cGmW.png)
 
-As you can see, Vettel and Hamilton make up a large majority of the comments by the end due to a controversial FIA call that caused Hamilton to win the race despite Vettel finishing first.
+The uses of the word 'penalty' spiked due to a controversial FIA call that caused Hamilton to win the race despite Vettel finishing first.
 
 ## Setup
 
